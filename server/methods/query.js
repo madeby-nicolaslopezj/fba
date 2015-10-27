@@ -2,9 +2,19 @@ Meteor.methods({
   query: function(doc) {
     check(doc, QuerySchema);
     console.log(doc);
-    return doc.pages.map(function(page) {
+    return doc.pages.map(function(pageId) {
       var points = [];
       var sinceCursor = moment(doc.since);
+
+      try {
+        var page = Meteor.call('fb_call', 'get', `${pageId}`);
+        console.log(page);
+      } catch (e) {
+        return {
+          data: [],
+          name: `${pageId} (Error)`
+        };
+      }
 
       while (sinceCursor.isBefore(moment(doc.until))) {
 
@@ -12,9 +22,9 @@ Meteor.methods({
         var until = sinceCursor.clone().add(80, 'days');
 
         try {
-          console.log(`GET ${page}/insights/page_fans_country`, since.unix(), until.unix());
+          console.log(`GET ${page.id}/insights/page_fans_country`, since.unix(), until.unix());
 
-          var response = Meteor.call('fb_call', 'get', `${page}/insights/page_fans_country`, {
+          var response = Meteor.call('fb_call', 'get', `${page.id}/insights/page_fans_country`, {
             since: since.unix(),
             until: until.unix()
           });
@@ -31,7 +41,7 @@ Meteor.methods({
 
       return {
         data: points,
-        name: page
+        name: page.name
       };
     });
   }

@@ -1,10 +1,10 @@
 QuerySchema = new SimpleSchema({
   pages: orion.attribute('tags', {
-    label: 'Pages'
+    label: 'Pages IDs'
   }),
   countryCode: {
     type: String,
-    label: 'Country'
+    label: 'Country Code'
   },
   since: {
     type: Date,
