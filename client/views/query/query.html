@@ -1,0 +1,38 @@
+<template name="query">
+  {{# Layout template="orionBootstrapMediumContentOffset" }}
+    {{# Layout template="orionBootstrapTitle" }}
+      Query
+    {{/ Layout }}
+    {{# Layout template="orionBootstrapContentContainer" }}
+      {{# autoForm schema='QuerySchema' id='queryForm' doc=getDoc buttonContent='Query' }}
+        <div class="row">
+          <div class="col-sm-4">
+            {{> afQuickField name='pages' }}
+          </div>
+          <div class="col-sm-2">
+            {{> afQuickField name='countryCode' }}
+          </div>
+          <div class="col-sm-2">
+            {{> afQuickField name='since' }}
+          </div>
+          <div class="col-sm-2">
+            {{> afQuickField name='until' }}
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-default btn-block" style="margin-top: 24px">Query</button>
+          </div>
+        </div>
+      {{/ autoForm }}
+
+      <br><br>
+      {{# if isLoading }}
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped active" style="width: 100%">
+        </div>
+      </div>
+      {{ else }}
+        {{> highchartsHelper chartId='query_chart' chartWidth='100%' charHeight='100%' chartObject=chart }}
+      {{/ if }}
+    {{/ Layout }}
+  {{/ Layout }}
+</template>
