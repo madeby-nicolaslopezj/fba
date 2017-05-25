@@ -4,6 +4,16 @@
       Query
     {{/ Layout }}
     {{# Layout template="orionBootstrapContentContainer" }}
+      <br><br>
+      {{# if isLoading }}
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" style="width: 100%">
+          </div>
+        </div>
+      {{ else }}
+        {{> highchartsHelper chartId='query_chart' chartWidth='100%' charHeight='100%' chartObject=chart }}
+      {{/ if }}
+      <br><br>
       {{# autoForm schema='QuerySchema' id='queryForm' doc=getDoc buttonContent='Query' }}
         <div class="row">
           <div class="col-sm-4">
@@ -23,16 +33,6 @@
           </div>
         </div>
       {{/ autoForm }}
-
-      <br><br>
-      {{# if isLoading }}
-      <div class="progress">
-        <div class="progress-bar progress-bar-striped active" style="width: 100%">
-        </div>
-      </div>
-      {{ else }}
-        {{> highchartsHelper chartId='query_chart' chartWidth='100%' charHeight='100%' chartObject=chart }}
-      {{/ if }}
     {{/ Layout }}
   {{/ Layout }}
 </template>
